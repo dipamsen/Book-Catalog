@@ -2,6 +2,8 @@
 
 An application to keep track of the all books at my home.
 
+<img src="screenshots/homepage.png" alt="Book Catalog" width="600">
+
 ## Technologies
 
 React, React Router, Firebase Realtime Database, Google Fonts, Google Books API, [Quotes API](https://github.com/well300/quotes-api)
