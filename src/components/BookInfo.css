@@ -1,0 +1,40 @@
+.book-info {
+  display: flex;
+  gap: 10px;
+  flex: 1;
+}
+
+.book-info .book-cover {
+  height: 100px;
+  aspect-ratio: 0.75;
+  object-fit: contain;
+}
+
+.book-info .book-details {
+  display: flex;
+  flex-direction: column;
+  align-self: center;
+  flex: 1;
+  gap: 5px;
+}
+
+.book-info .book-details .book-title {
+  font-size: 1.5em;
+}
+
+.book-info .book-details .book-subtitle {
+  font-size: 1em;
+}
+
+.book-info .book-details .book-authors {
+  color: #666;
+}
+
+.book-info .book-details .book-description {
+  font-size: 0.9em;
+}
+
+.book-info .book-details .book-info {
+  color: #666;
+  font-size: 0.8em;
+}

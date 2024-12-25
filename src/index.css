@@ -1,0 +1,56 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  font-family: "Josefin Sans", sans-serif;
+  background: #f5f5f5;
+  color: #333;
+  height: 100%;
+}
+
+input,
+select,
+textarea,
+button {
+  font-family: "Arvo", sans-serif;
+}
+
+button {
+  cursor: pointer;
+  outline: none;
+  padding: 10px 10px;
+  border-radius: 5px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+}
+
+a {
+  text-decoration: none;
+  color: #73adeb;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.truncate-text {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

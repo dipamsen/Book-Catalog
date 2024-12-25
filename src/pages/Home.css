@@ -1,0 +1,108 @@
+.home {
+  display: flex;
+  flex-direction: column;
+}
+
+.home h1 {
+  margin: 20px 0;
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 0;
+}
+
+.home h2 {
+  margin: 10px 0;
+  font-size: 2rem;
+  text-align: center;
+}
+
+.home .actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+  width: 100%;
+}
+
+.home .actions .btn {
+  padding: 10px 20px;
+  margin: 10px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  width: 100%;
+  text-align: center;
+}
+
+.home .actions .btn:hover {
+  background-color: #0056b3;
+  text-decoration: none;
+}
+
+.home .recommended {
+  width: 100%;
+}
+
+.home .recommended .books {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.home .quote {
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 100%;
+  width: 500px;
+  align-self: center;
+}
+
+.home .quote blockquote {
+  font-size: 1.5rem;
+  display: block;
+  text-align: center;
+}
+
+.home .quote cite {
+  font-size: 1.2rem;
+  font-style: normal;
+  display: block;
+  width: 100%;
+  text-align: right;
+}
+
+.home .quote cite::before {
+  content: "— ";
+}
+
+.home .recommended .books .book-tile img {
+  width: 128px;
+}
+
+@media (min-width: 768px) {
+  .home .actions {
+    flex-direction: row;
+  }
+
+  .home .actions .btn {
+    width: auto;
+  }
+
+  .home .recommended .books {
+    flex-direction: row;
+  }
+
+  .home .recommended .books .book-tile {
+    flex: 0 0 auto;
+    width: 180px;
+  }
+
+  .home .recommended .books .book-tile img {
+    width: auto;
+  }
+}

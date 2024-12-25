@@ -1,0 +1,49 @@
+.view-books .rack {
+  margin: 10px 0;
+}
+
+.view-books .rack h2 {
+  cursor: pointer;
+  padding: 10px;
+  margin: 0;
+  background-color: #ddd;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  user-select: none;
+  border-bottom: none;
+}
+
+.view-books .rack h2::after {
+  content: "▼";
+  float: right;
+  font-size: 1.2rem;
+}
+
+.view-books .rack.active h2 {
+  border-radius: 5px 5px 0 0;
+}
+
+.view-books .rack.active h2::after {
+  content: "▲";
+}
+
+.view-books .rack .books {
+  display: none;
+}
+
+.view-books .rack.active .books {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-top: none;
+  border-radius: 0 0 5px 5px;
+}
+
+@media (min-width: 768px) {
+  .view-books .rack.active .books {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    grid-gap: 30px;
+  }
+}

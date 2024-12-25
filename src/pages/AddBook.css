@@ -1,0 +1,68 @@
+.add-book {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.add-book .add-book-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.add-book .search-box {
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.add-book .search-box:focus {
+  outline: none;
+  border-color: #0077cc;
+}
+
+.add-book .rack-select {
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.add-book .rack-select:focus {
+  outline: none;
+  border-color: #0077cc;
+}
+
+.add-book form {
+  width: 100%;
+}
+
+.search-results {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.search-results .search-result {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.add-book .actions {
+  align-self: center;
+}
+
+@media (min-width: 768px) {
+  .add-book .add-book-form {
+    flex-direction: row;
+  }
+
+  .add-book .rack-select {
+    width: auto;
+  }
+}
