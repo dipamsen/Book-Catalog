@@ -2,7 +2,7 @@
 
 An application to keep track of the all books at my home.
 
-<img src="screenshots/homepage.png" alt="Book Catalog" width="600">
+<center><img src="screenshots/homepage.png" alt="Book Catalog" width="600"></center>
 
 ## Technologies
 
