@@ -2,15 +2,18 @@
   margin: 10px 0;
 }
 
+.view-books .rack.active {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
 .view-books .rack h2 {
   cursor: pointer;
   padding: 10px;
   margin: 0;
-  background-color: #ddd;
-  border: 1px solid #ccc;
+  background-color: #95dbc6;
+  border: 2px solid #39a786;
   border-radius: 5px;
   user-select: none;
-  border-bottom: none;
 }
 
 .view-books .rack h2::after {
@@ -21,6 +24,7 @@
 
 .view-books .rack.active h2 {
   border-radius: 5px 5px 0 0;
+  border-bottom: none;
 }
 
 .view-books .rack.active h2::after {
@@ -35,7 +39,8 @@
   display: flex;
   flex-direction: column;
   padding: 10px;
-  border: 1px solid #ccc;
+  background-color: #f0faf7;
+  border: 2px solid #39a786;
   border-top: none;
   border-radius: 0 0 5px 5px;
 }

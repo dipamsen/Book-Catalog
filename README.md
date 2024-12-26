@@ -6,9 +6,7 @@ An application to keep track of the all books at my home.
     <img src="screenshots/homepage.png" alt="Book Catalog" width="600">
 </p>
 
-## Technologies
-
-React, React Router, Firebase Realtime Database, Google Fonts, Google Books API, [Quotes API](https://github.com/well300/quotes-api)
+A demo of the application is available [here](https://book-catalog-demo.vercel.app/). The demo uses a in-memory database, so the data does not persist between sessions.
 
 ## Setup
 
@@ -16,8 +14,8 @@ To run this project locally, you need to have Node.js installed on your machine.
 
 1. Clone the repository
 2. Run `npm install` to install the dependencies
-3. Create a Firebase project and add a Realtime Database
-4. Copy `src/config.sample.ts` to `src/config.ts` and add your Firebase configuration
+3. Copy the `.env.sample` file to `.env` and fill in the required environment variables
+4. (Optional) Set up a firebase project with Realtime Database, and fill in the required environment variables for persistence.
 5. Run `npm run dev` to start the development server
 
 ## License

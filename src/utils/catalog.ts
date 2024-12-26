@@ -1,9 +1,11 @@
 import { get, ref, set } from "@firebase/database";
 import { getBook } from "./books";
-import { db } from "./database";
+import { getFirebaseDB } from "./database";
 import { BookInfo, Rack } from "./types";
 
 export const books: BookInfo[] = [];
+
+const useFirebase = import.meta.env.VITE_DATABASE_TYPE === "firebase";
 
 export async function addBook(id: string, rack: Rack) {
   const book = await getBook(id);
@@ -13,6 +15,11 @@ export async function addBook(id: string, rack: Rack) {
     info: book.volumeInfo!,
     rack,
   };
+  if (!useFirebase) {
+    books.push(bookInfo);
+    return;
+  }
+  const db = getFirebaseDB();
   const docRef = ref(db, `books/${book.id}`);
   await set(docRef, bookInfo);
   books.push(bookInfo);
@@ -20,6 +27,8 @@ export async function addBook(id: string, rack: Rack) {
 
 export async function loadBooks() {
   if (books.length > 0) return;
+  if (!useFirebase) return;
+  const db = getFirebaseDB();
   const booksRef = ref(db, "books");
   const snapshot = await get(booksRef);
   if (snapshot.exists() && books.length === 0) {

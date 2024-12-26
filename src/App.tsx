@@ -1,10 +1,11 @@
-import AddBook from "./pages/AddBook";
 import "./App.css";
 import { useEffect, useState } from "react";
 import { books, clearBooks, loadBooks } from "./utils/catalog";
 import { BrowserRouter, Routes, Route } from "react-router";
-import ViewBooks from "./pages/ViewBooks";
 import Home from "./pages/Home";
+import AddBook from "./pages/AddBook";
+import ViewBooks from "./pages/ViewBooks";
+import SearchBook from "./pages/SearchBook";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -28,16 +29,14 @@ function App() {
           <div className="loader"></div>
         </div>
       ) : (
-        <>
-          <h1>Books Catalog</h1>
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="add" element={<AddBook />} />
-              <Route path="view" element={<ViewBooks />} />
-            </Routes>
-          </BrowserRouter>
-        </>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="add" element={<AddBook />} />
+            <Route path="books" element={<ViewBooks />} />
+            <Route path="search" element={<SearchBook />} />
+          </Routes>
+        </BrowserRouter>
       )}
     </div>
   );

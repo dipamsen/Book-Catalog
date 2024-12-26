@@ -4,6 +4,8 @@ import { books } from "../utils/catalog";
 import { BookInfo } from "../utils/types";
 import { fetchQuote, Quote } from "../utils/quotes";
 import { useEffect, useState } from "react";
+import Header from "../components/Header";
+import { Link } from "react-router";
 
 export default function Home() {
   const [quote, setQuote] = useState<Quote>();
@@ -30,16 +32,17 @@ export default function Home() {
 
   return (
     <div className="home">
+      <Header />
       <div className="actions">
-        <a href="/view" className="btn">
+        <Link to="/books" className="btn">
           Browse Catalog
-        </a>
-        <a href="/search" className="btn">
+        </Link>
+        <Link to="/search" className="btn">
           Search Book
-        </a>
-        <a href="/add" className="btn">
+        </Link>
+        <Link to="/add" className="btn">
           Add Book
-        </a>
+        </Link>
       </div>
 
       {quote && (

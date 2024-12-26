@@ -3,6 +3,7 @@ import "./ViewBooks.css";
 import { books } from "../utils/catalog";
 import BookTile from "../components/BookTile";
 import { useState } from "react";
+import Header from "../components/Header";
 
 export default function AddBook() {
   const [activeRack, setActiveRack] = useState<Rack | null>(null);
@@ -13,6 +14,7 @@ export default function AddBook() {
 
   return (
     <div className="view-books">
+      <Header />
       {racks.map((rack) => (
         <div
           key={rack}
@@ -26,11 +28,15 @@ export default function AddBook() {
             Rack {rack}
           </h2>
           <div className="books">
-            {books
-              .filter((book) => book.rack === rack)
-              .map((book) => (
-                <BookTile key={book.id} book={book} />
-              ))}
+            {(() => {
+              const views = books
+                .filter((book) => book.rack === rack)
+                .map((book) => <BookTile key={book.id} book={book} />);
+              if (views.length === 0) {
+                return <div>No books added yet...</div>;
+              }
+              return views;
+            })()}
           </div>
         </div>
       ))}

@@ -2,24 +2,31 @@ import { books_v1 } from "googleapis";
 import "./BookInfo.css";
 
 export default function BookInfo({ book }: { book: books_v1.Schema$Volume }) {
-  const datefmt = new Intl.DateTimeFormat("en-US", {
+  const datefmt = new Intl.DateTimeFormat("en-IN", {
     year: "numeric",
     month: "short",
   });
 
-  if (!book.volumeInfo) return null;
-  const info = [
-    book.volumeInfo.publisher,
-    book.volumeInfo.publishedDate &&
-      datefmt.format(new Date(book.volumeInfo.publishedDate)),
-    book.volumeInfo.pageCount && book.volumeInfo.pageCount + " pages",
-    book.volumeInfo.categories?.join(", "),
-  ].filter(Boolean);
+  function fmt(date: string) {
+    try {
+      return datefmt.format(new Date(date));
+    } catch {
+      return date;
+    }
+  }
 
   function cleanURL(link: string | undefined) {
     if (!link) return "https://via.placeholder.com/100x133";
     return link.replace("&edge=curl", "");
   }
+
+  if (!book.volumeInfo) return null;
+  const info = [
+    book.volumeInfo.publisher,
+    book.volumeInfo.publishedDate && fmt(book.volumeInfo.publishedDate),
+    book.volumeInfo.pageCount && book.volumeInfo.pageCount + " pages",
+    book.volumeInfo.categories?.join(", "),
+  ].filter(Boolean);
 
   return (
     <div className="book-info" key={book.id}>
