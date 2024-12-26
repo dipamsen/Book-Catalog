@@ -1,0 +1,21 @@
+.edit-book table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.edit-book table th,
+.edit-book table td {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+}
+
+.edit-book table td img {
+  height: 100px;
+  aspect-ratio: 2/3;
+  object-fit: contain;
+}
+
+.edit-book .actions {
+  display: flex;
+  margin: 10px 0 0 0;
+}

@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./AddBook.css";
 import { Rack, racks } from "../utils/types";
 import BookInfo from "../components/BookInfo";
 import { searchBooks } from "../utils/books";
 import { books_v1 } from "googleapis";
-import { addBook } from "../utils/catalog";
+import { addBook, addCustomBook } from "../utils/catalog";
 import Header from "../components/Header";
 import BarcodeScanner from "../components/BarcodeScanner";
 import { Result } from "@zxing/library";
@@ -12,15 +12,29 @@ import { Result } from "@zxing/library";
 export default function AddBook() {
   const [rack, setRack] = useState<Rack | "">("");
   const [search, setSearch] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const [results, setResults] = useState<books_v1.Schema$Volume[]>([]);
   const [showScanner, setShowScanner] = useState(false);
   const [searching, setSearching] = useState(false);
+  const [scannedISBN, setScannedISBN] = useState("");
+  const [showCustomBookCreation, setShowCustomBookCreation] = useState(false);
+  const [customBookTitle, setCustomBookTitle] = useState("");
+  const [customBookISBN, setCustomBookISBN] = useState("");
+
+  function clearSearch() {
+    setResults([]);
+    setSearch("");
+    setSearchTerm("");
+    setScannedISBN("");
+    setCustomBookTitle("");
+    setCustomBookISBN("");
+    setShowCustomBookCreation(false);
+  }
 
   function scanBarcode() {
     setShowScanner((prev) => {
       if (!prev) {
-        setResults([]);
-        setSearch("");
+        clearSearch();
       }
       return !prev;
     });
@@ -38,11 +52,27 @@ export default function AddBook() {
   function handleScan(_err: unknown, result: Result | undefined) {
     if (result) {
       setShowScanner(false);
-      const newSearch = "isbn:" + result.getText();
-      setSearch(newSearch);
-      handleSearch(newSearch);
+      setSearch("isbn:" + result.getText());
+      setSearchTerm("isbn:" + result.getText());
+      setScannedISBN(result.getText());
     }
   }
+
+  function createCustomBook() {
+    const searchedByISBN = searchTerm.slice(0, 5).toLowerCase() === "isbn:";
+    const title = searchedByISBN ? "" : searchTerm;
+    const isbn = scannedISBN || searchedByISBN ? searchTerm.slice(5) : "";
+    clearSearch();
+    setShowCustomBookCreation(true);
+    setCustomBookTitle(title);
+    setCustomBookISBN(isbn);
+  }
+
+  useEffect(() => {
+    if (searchTerm) {
+      handleSearch(searchTerm);
+    }
+  }, [searchTerm]);
 
   return (
     <div className="add-book">
@@ -66,7 +96,7 @@ export default function AddBook() {
             className="search-form"
             onSubmit={(e) => {
               e.preventDefault();
-              handleSearch(search);
+              setSearchTerm(search);
             }}
           >
             <input
@@ -103,6 +133,42 @@ export default function AddBook() {
         <div className="no-results">{searching && "Searching..."}</div>
       )}
 
+      {showCustomBookCreation && rack && (
+        <div className="custom-book-form">
+          <h3>Add Custom Book</h3>
+          <div className="inputs">
+            <input
+              type="text"
+              placeholder="Title"
+              value={customBookTitle}
+              onChange={(e) => setCustomBookTitle(e.target.value)}
+            />
+            <input
+              type="text"
+              placeholder="ISBN"
+              value={customBookISBN}
+              onChange={(e) => setCustomBookISBN(e.target.value)}
+            />
+          </div>
+          <button
+            onClick={() => {
+              if (customBookTitle && customBookISBN) {
+                addCustomBook(customBookISBN, customBookTitle, rack).then(
+                  () => {
+                    setCustomBookTitle("");
+                    setCustomBookISBN("");
+                    setShowCustomBookCreation(false);
+                    clearSearch();
+                  }
+                );
+              }
+            }}
+          >
+            Add to {rack}
+          </button>
+        </div>
+      )}
+
       <div className="search-results">
         {results.map((book) => (
           <div className="search-result" key={book.id}>
@@ -112,8 +178,7 @@ export default function AddBook() {
                 <button
                   onClick={() => {
                     addBook(book.id!, rack).then(() => {
-                      setResults([]);
-                      setSearch("");
+                      clearSearch();
                     });
                   }}
                   className="add-button"
@@ -124,6 +189,31 @@ export default function AddBook() {
             </div>
           </div>
         ))}
+        {searchTerm && !searching && (
+          <div className="search-result" key="custom">
+            <BookInfo
+              book={{
+                id: "custom",
+                volumeInfo: {
+                  title: "Unknown Book",
+                  authors: ["Unknown Author"],
+                },
+              }}
+            />
+            <div className="actions">
+              {rack && (
+                <button
+                  onClick={() => {
+                    createCustomBook();
+                  }}
+                  className="add-button"
+                >
+                  Add to {rack}
+                </button>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

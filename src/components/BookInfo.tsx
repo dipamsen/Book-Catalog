@@ -31,7 +31,7 @@ export default function BookInfo({ book }: { book: books_v1.Schema$Volume }) {
   return (
     <div className="book-info" key={book.id}>
       <img
-        src={cleanURL(book.volumeInfo.imageLinks?.smallThumbnail)}
+        src={cleanURL(book.volumeInfo.imageLinks?.thumbnail)}
         className="book-cover"
         alt={book.volumeInfo.title}
       />

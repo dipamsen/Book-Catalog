@@ -66,4 +66,5 @@ export interface BookInfo {
   title: string;
   info: books_v1.Schema$Volume["volumeInfo"];
   rack: Rack;
+  custom: boolean;
 }

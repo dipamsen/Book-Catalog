@@ -8,10 +8,6 @@ import Header from "../components/Header";
 export default function AddBook() {
   const [activeRack, setActiveRack] = useState<Rack | null>(null);
 
-  // function isRack(rack: string): rack is Rack {
-  //   return racks.includes(rack as Rack);
-  // }
-
   return (
     <div className="view-books">
       <Header />

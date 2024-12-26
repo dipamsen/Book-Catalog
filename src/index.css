@@ -31,6 +31,22 @@ button {
   background-color: #fff;
 }
 
+input {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+input:focus {
+  outline: none;
+  border-color: #2f896e;
+}
+
+input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+}
+
 button {
   cursor: pointer;
   outline: none;

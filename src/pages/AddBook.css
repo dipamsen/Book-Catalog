@@ -90,3 +90,29 @@
     width: auto;
   }
 }
+
+.custom-book-form .inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+}
+
+.custom-book-form input {
+  font-size: 1rem;
+  padding: 0.5rem;
+  width: 100%;
+  border: 0.6px solid #ccc;
+  border-radius: 2px;
+}
+
+.custom-book-form input:focus {
+  outline: none;
+  border: 1px solid #2f896e;
+}
+
+@media (min-width: 768px) {
+  .custom-book-form .inputs {
+    flex-direction: row;
+  }
+}

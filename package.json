@@ -7,7 +7,9 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "deploy": "vercel build --prod && vercel deploy --prebuilt --prod",
+    "deploy:preview": "vercel build && vercel deploy --prebuilt"
   },
   "dependencies": {
     "@firebase/database": "^1.0.10",
@@ -30,6 +32,7 @@
     "globals": "^15.14.0",
     "typescript": "~5.6.2",
     "typescript-eslint": "^8.18.2",
+    "vercel": "^39.2.2",
     "vite": "^6.0.5"
   },
   "license": "MIT"

@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import AddBook from "./pages/AddBook";
 import ViewBooks from "./pages/ViewBooks";
 import SearchBook from "./pages/SearchBook";
+import EditBook from "./pages/EditBook";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -35,6 +36,7 @@ function App() {
             <Route path="add" element={<AddBook />} />
             <Route path="books" element={<ViewBooks />} />
             <Route path="search" element={<SearchBook />} />
+            <Route path="edit" element={<EditBook />} />
           </Routes>
         </BrowserRouter>
       )}
