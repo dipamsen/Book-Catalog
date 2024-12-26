@@ -31,18 +31,22 @@
   content: "▲";
 }
 
-.view-books .rack .books {
+.view-books .rack .rack-content {
   display: none;
 }
 
-.view-books .rack.active .books {
-  display: flex;
-  flex-direction: column;
+.view-books .rack.active .rack-content {
+  display: block;
   padding: 10px;
   background-color: #f0faf7;
   border: 2px solid #39a786;
   border-top: none;
   border-radius: 0 0 5px 5px;
+}
+
+.view-books .rack.active .books {
+  display: flex;
+  flex-direction: column;
 }
 
 .view-books .rack.active .books .book-tile img {

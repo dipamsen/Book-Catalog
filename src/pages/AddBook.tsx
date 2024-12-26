@@ -16,7 +16,6 @@ export default function AddBook() {
   const [results, setResults] = useState<books_v1.Schema$Volume[]>([]);
   const [showScanner, setShowScanner] = useState(false);
   const [searching, setSearching] = useState(false);
-  const [scannedISBN, setScannedISBN] = useState("");
   const [showCustomBookCreation, setShowCustomBookCreation] = useState(false);
   const [customBookTitle, setCustomBookTitle] = useState("");
   const [customBookISBN, setCustomBookISBN] = useState("");
@@ -25,7 +24,6 @@ export default function AddBook() {
     setResults([]);
     setSearch("");
     setSearchTerm("");
-    setScannedISBN("");
     setCustomBookTitle("");
     setCustomBookISBN("");
     setShowCustomBookCreation(false);
@@ -43,6 +41,7 @@ export default function AddBook() {
   function handleSearch(search: string) {
     if (!search) return;
     setSearching(true);
+    setResults([]);
     searchBooks(search).then((data) => {
       if (data.items) setResults(data.items);
       setSearching(false);
@@ -54,14 +53,18 @@ export default function AddBook() {
       setShowScanner(false);
       setSearch("isbn:" + result.getText());
       setSearchTerm("isbn:" + result.getText());
-      setScannedISBN(result.getText());
     }
   }
 
   function createCustomBook() {
-    const searchedByISBN = searchTerm.slice(0, 5).toLowerCase() === "isbn:";
+    const searchedByISBN =
+      searchTerm.slice(0, 5).toLowerCase() === "isbn:"
+        ? searchTerm.slice(5)
+        : searchTerm.split("").every((c) => "0123456789".includes(c))
+        ? searchTerm
+        : "";
     const title = searchedByISBN ? "" : searchTerm;
-    const isbn = scannedISBN || searchedByISBN ? searchTerm.slice(5) : "";
+    const isbn = searchedByISBN;
     clearSearch();
     setShowCustomBookCreation(true);
     setCustomBookTitle(title);

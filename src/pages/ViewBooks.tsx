@@ -11,6 +11,7 @@ export default function AddBook() {
   return (
     <div className="view-books">
       <Header />
+      Total Books: {books.length}
       {racks.map((rack) => (
         <div
           key={rack}
@@ -23,15 +24,21 @@ export default function AddBook() {
           >
             Rack {rack}
           </h2>
-          <div className="books">
+          <div className="rack-content">
             {(() => {
-              const views = books
-                .filter((book) => book.rack === rack)
-                .map((book) => <BookTile key={book.id} book={book} />);
+              const rackBooks = books.filter((book) => book.rack === rack);
+              const views = rackBooks.map((book) => (
+                <BookTile key={book.id} book={book} />
+              ));
               if (views.length === 0) {
                 return <div>No books added yet...</div>;
               }
-              return views;
+              return (
+                <>
+                  <div>Total Books: {rackBooks.length}</div>
+                  <div className="books">{views}</div>
+                </>
+              );
             })()}
           </div>
         </div>
