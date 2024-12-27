@@ -1,0 +1,22 @@
+.search-book form {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.search-book input {
+  width: 100%;
+}
+
+.search-book .scan-button {
+  all: unset;
+  cursor: pointer;
+}
+
+.search-book .scan-button .active {
+  color: #2f896e;
+}
+
+.search-book .scan-button .icon {
+  font-size: 2.2rem;
+}

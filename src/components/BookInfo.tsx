@@ -17,7 +17,7 @@ export default function BookInfo({ book }: { book: books_v1.Schema$Volume }) {
 
   function cleanURL(link: string | undefined) {
     if (!link) return "https://via.placeholder.com/100x133";
-    return link.replace("&edge=curl", "");
+    return link;
   }
 
   if (!book.volumeInfo) return null;

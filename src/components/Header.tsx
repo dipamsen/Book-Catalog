@@ -1,20 +1,20 @@
 import "./Header.css";
-import { Link, useLocation, useResolvedPath } from "react-router";
+import { Link } from "react-router";
 
-export default function Header() {
-  const loc = useLocation();
-  const path = useResolvedPath("../");
-
+export default function Header({ backLink }: { backLink?: string }) {
   return (
     <div className="header">
-      {loc.pathname === "/" ? (
-        <span className="material-symbols-outlined book-icon icon">book_2</span>
-      ) : (
+      {backLink ? (
         <span className="material-symbols-outlined back-icon icon">
-          <Link to={path} style={{ textDecoration: "none", color: "inherit" }}>
+          <Link
+            to={backLink}
+            style={{ textDecoration: "none", color: "inherit" }}
+          >
             arrow_back
           </Link>
         </span>
+      ) : (
+        <span className="material-symbols-outlined book-icon icon">book_2</span>
       )}
       <h1>Books Catalog</h1>
     </div>

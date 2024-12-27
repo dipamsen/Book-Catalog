@@ -73,8 +73,22 @@ export async function loadBooks() {
   }
 }
 
-export function clearBooks() {
-  books.splice(0, books.length);
+export async function updateBook(book: BookInfo) {
+  if (!useFirebase) {
+    const index = books.findIndex((b) => b.id === book.id);
+    if (index !== -1) {
+      books[index] = book;
+    }
+    return;
+  }
+  const db = getFirebaseDB();
+  const docRef = ref(db, `books/${book.id}`);
+  await set(docRef, book);
+
+  const index = books.findIndex((b) => b.id === book.id);
+  if (index !== -1) {
+    books[index] = book;
+  }
 }
 
 export async function bulkUpdate(newBooks: BookInfo[], deleteBooks: string[]) {

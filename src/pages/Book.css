@@ -1,0 +1,72 @@
+.book-page .book-title {
+  font-size: 2rem;
+  margin: 0 0 1rem 0;
+  font-weight: bold;
+}
+
+.book-page .book-authors {
+  font-size: 1.5rem;
+  margin: 0 0 1rem 0;
+}
+
+.book-page .book-cover {
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.book-page .subtitle {
+  font-size: 1.2rem;
+  margin: 1rem 0 1rem 0;
+}
+
+.book-page .description {
+  font-size: 1.2rem;
+  margin: 1rem 0;
+}
+
+.book-page .side {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.book-page .rack {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+.book-page .edit-btn {
+  font-size: 1.2rem;
+  padding: 0.5rem 1rem;
+  background-color: #95dbc6;
+  border: 2px solid #39a786;
+  border-radius: 5px;
+  cursor: pointer;
+  color: black;
+}
+
+.book-page .edit-btn:hover {
+  background-color: #39a786;
+  color: white;
+  text-decoration: none;
+}
+
+@media (min-width: 768px) {
+  .book-page .mid {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .book-page .subtitle {
+    margin: 0;
+  }
+
+  .book-page img {
+    flex: 1;
+  }
+
+  .book-page .side {
+    flex: 1;
+  }
+}

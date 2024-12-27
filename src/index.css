@@ -27,17 +27,21 @@ input,
 select,
 textarea,
 button {
-  font-family: "Arvo", sans-serif;
+  font-family: inherit;
   background-color: #fff;
 }
 
-input {
+input,
+textarea,
+select {
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
 }
 
-input:focus {
+input:focus,
+textarea:focus,
+select:focus {
   outline: none;
   border-color: #2f896e;
 }
@@ -75,4 +79,8 @@ a:hover {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+img {
+  display: block;
 }

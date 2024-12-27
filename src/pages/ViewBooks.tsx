@@ -10,7 +10,7 @@ export default function AddBook() {
 
   return (
     <div className="view-books">
-      <Header />
+      <Header backLink="/" />
       Total Books: {books.length}
       {racks.map((rack) => (
         <div

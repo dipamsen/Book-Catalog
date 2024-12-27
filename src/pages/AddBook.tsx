@@ -79,7 +79,7 @@ export default function AddBook() {
 
   return (
     <div className="add-book">
-      <Header />
+      <Header backLink="/" />
       <h2>Add Book</h2>
       <div className="add-book-form">
         <select
@@ -110,7 +110,11 @@ export default function AddBook() {
               onChange={(e) => setSearch(e.target.value)}
             />
           </form>
-          <button className="scan-button" onClick={() => scanBarcode()}>
+          <button
+            title="Scan Barcode"
+            className="scan-button"
+            onClick={() => scanBarcode()}
+          >
             <span
               className={[
                 "material-symbols-outlined",

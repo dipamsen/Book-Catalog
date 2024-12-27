@@ -3,10 +3,6 @@
   flex-direction: column;
 }
 
-.home .header {
-  margin: 20px 0;
-}
-
 .home h2 {
   margin: 10px 0;
   font-size: 2rem;
@@ -101,6 +97,6 @@
   }
 
   .home .recommended .books .book-tile img {
-    width: auto;
+    width: 100%;
   }
 }

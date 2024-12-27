@@ -75,3 +75,12 @@ export interface BookInfo {
   googleBooksCategories?: string[];
   rack: Rack;
 }
+
+export const categories = [
+  "Health",
+  "Personal Development",
+  "Business/Leadership/Management",
+  "Biography/Autobiography",
+  "Spirituality/Philosophy/Religion",
+  "Others",
+];

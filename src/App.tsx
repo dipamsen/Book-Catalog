@@ -6,6 +6,8 @@ import Home from "./pages/Home";
 import AddBook from "./pages/AddBook";
 import ViewBooks from "./pages/ViewBooks";
 import SearchBook from "./pages/SearchBook";
+import EditBooks from "./pages/EditBooks";
+import Book from "./pages/Book";
 import EditBook from "./pages/EditBook";
 
 function App() {
@@ -19,7 +21,7 @@ function App() {
     init();
 
     return () => {
-      clearBooks();
+      books.length = 0;
     };
   }, []);
 
@@ -35,8 +37,10 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="add" element={<AddBook />} />
             <Route path="books" element={<ViewBooks />} />
+            <Route path="book/:id" element={<Book />} />
             <Route path="search" element={<SearchBook />} />
-            <Route path="edit" element={<EditBook />} />
+            <Route path="edit" element={<EditBooks />} />
+            <Route path="edit/:id" element={<EditBook />} />
           </Routes>
         </BrowserRouter>
       )}

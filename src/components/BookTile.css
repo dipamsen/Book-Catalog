@@ -25,6 +25,14 @@
   gap: 5px;
 }
 
+.book-tile.horizontal {
+  flex-direction: row;
+}
+
+.book-tile.horizontal img {
+  width: 100px;
+}
+
 @media (min-width: 768px) {
   .book-tile {
     display: flex;
@@ -43,4 +51,16 @@
     font-size: 0.8rem;
     font-style: italic;
   }
+
+  .book-tile img {
+    width: 100%;
+  }
+}
+
+.book-tile .book-link {
+  color: black;
+}
+
+.book-tile .book-link:hover {
+  text-decoration: none;
 }

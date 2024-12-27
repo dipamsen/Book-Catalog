@@ -1,128 +1,131 @@
-import { useState } from "react";
+import { useNavigate, useParams } from "react-router";
 import Header from "../components/Header";
-import { books, bulkUpdate } from "../utils/catalog";
-import { BookInfo, Rack, racks } from "../utils/types";
+import { books, updateBook } from "../utils/catalog";
 import "./EditBook.css";
+import { categories, Rack, racks } from "../utils/types";
+import { useState } from "react";
 
 export default function EditBook() {
-  const [newBooks, setNewBooks] = useState<BookInfo[]>(books);
-  const [deletedBooks, setDeletedBooks] = useState<string[]>([]);
+  const { id } = useParams<{ id: string }>();
+  const [book, setBook] = useState(books.find((book) => book.id === id));
+  const navigate = useNavigate();
 
-  function cleanURL(link: string | undefined) {
-    if (!link) return "https://via.placeholder.com/100x133";
-    return link.replace("&edge=curl", "");
-  }
-
-  function saveChanges() {
-    const newBooksList = newBooks.filter(
-      (book) => !deletedBooks.includes(book.id)
-    );
-
-    bulkUpdate(newBooksList, deletedBooks).then(() => {
-      alert("Changes saved successfully!");
-      setDeletedBooks([]);
-      setNewBooks(books);
-    });
+  if (!id || !book) {
+    return null;
   }
 
   return (
     <div className="edit-book">
-      <Header />
-      <h2>Edit Books</h2>
+      <Header backLink={`/book/${id}`} />
 
-      <table>
-        <thead>
-          <tr>
-            {/* <th>ID</th> */}
-            <th>Image</th>
-            <th>Title</th>
-            <th>Rack</th>
-            <th>Delete</th>
-          </tr>
-        </thead>
-        <tbody>
-          {newBooks.map((book) => (
-            <tr key={book.id}>
-              {/* <td>{book.id}</td> */}
-              <td>
-                <img
-                  src={cleanURL(book.info?.imageLinks?.thumbnail)}
-                  alt={book.title}
-                />
-              </td>
-              <td>
-                {book.custom ? (
-                  <input
-                    type="text"
-                    value={book.title}
-                    onChange={(e) => {
-                      setNewBooks((prev) => [
-                        ...prev.map((b) => {
-                          if (b.id === book.id) {
-                            return {
-                              ...b,
-                              info: {
-                                ...b.info,
-                                title: e.target.value,
-                              },
-                              title: e.target.value,
-                            };
-                          }
-                          return b;
-                        }),
-                      ]);
-                    }}
-                  />
-                ) : (
-                  book.title
-                )}
-              </td>
-              <td>
-                <select
-                  value={book.rack}
-                  onChange={(e) => {
-                    setNewBooks((prev) => [
-                      ...prev.map((b) => {
-                        if (b.id === book.id) {
-                          return {
-                            ...b,
-                            rack: e.target.value as Rack,
-                          };
-                        }
-                        return b;
-                      }),
-                    ]);
-                  }}
-                >
-                  {racks.map((rack) => (
-                    <option key={rack} value={rack}>
-                      {rack}
-                    </option>
-                  ))}
-                </select>
-              </td>
-              <td>
-                <input
-                  type="checkbox"
-                  checked={deletedBooks.includes(book.id)}
-                  onChange={(e) => {
-                    if (e.target.checked) {
-                      setDeletedBooks((prev) => [...prev, book.id]);
-                    } else {
-                      setDeletedBooks((prev) =>
-                        prev.filter((id) => id !== book.id)
-                      );
-                    }
-                  }}
-                />
-              </td>
-            </tr>
+      <h2>Edit Book</h2>
+
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          updateBook(book).then(() => {
+            navigate(`/book/${id}`);
+          });
+        }}
+      >
+        <label htmlFor="title">Title *</label>
+        <input
+          type="text"
+          id="title"
+          value={book.title}
+          onChange={(e) => setBook({ ...book, title: e.target.value })}
+        />
+
+        <label htmlFor="authors">Authors *</label>
+        <input
+          type="text"
+          id="authors"
+          value={book.authors?.join(", ") || ""}
+          onChange={(e) =>
+            setBook({ ...book, authors: e.target.value.split(", ") })
+          }
+        />
+
+        <label htmlFor="subtitle">Subtitle</label>
+        <input
+          type="text"
+          id="subtitle"
+          value={book.subtitle}
+          onChange={(e) => setBook({ ...book, subtitle: e.target.value })}
+        />
+
+        <label htmlFor="category">Category *</label>
+        <select
+          id="category"
+          value={book.category}
+          onChange={(e) => setBook({ ...book, category: e.target.value })}
+        >
+          {categories.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
           ))}
-        </tbody>
-      </table>
-      <div className="actions">
-        <button onClick={saveChanges}>Save Changes</button>
-      </div>
+        </select>
+
+        <label htmlFor="rack">Rack</label>
+        <select
+          id="rack"
+          value={book.rack}
+          onChange={(e) => setBook({ ...book, rack: e.target.value as Rack })}
+        >
+          {racks.map((rack) => (
+            <option key={rack} value={rack}>
+              {rack}
+            </option>
+          ))}
+        </select>
+
+        <label htmlFor="publicationDate">Publication Date</label>
+        <input
+          type="date"
+          id="publicationDate"
+          value={book.publicationDate}
+          onChange={(e) =>
+            setBook({ ...book, publicationDate: e.target.value })
+          }
+        />
+
+        <label htmlFor="pages">Pages</label>
+        <input
+          type="number"
+          id="pages"
+          value={book.pages}
+          onChange={(e) =>
+            setBook({ ...book, pages: parseInt(e.target.value) })
+          }
+        />
+
+        <label htmlFor="isbn">ISBN</label>
+        <input
+          type="text"
+          id="isbn"
+          value={book.isbn}
+          onChange={(e) => setBook({ ...book, isbn: e.target.value })}
+        />
+
+        <label htmlFor="coverImage">Cover Image</label>
+        <input
+          type="text"
+          id="coverImage"
+          value={book.coverImage}
+          onChange={(e) => setBook({ ...book, coverImage: e.target.value })}
+        />
+
+        <label htmlFor="description">Description</label>
+        <textarea
+          id="description"
+          rows={8}
+          value={book.description}
+          onChange={(e) => setBook({ ...book, description: e.target.value })}
+        ></textarea>
+
+        <button type="submit">Save Changes</button>
+      </form>
     </div>
   );
 }
