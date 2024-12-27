@@ -1,6 +1,6 @@
 import "./App.css";
 import { useEffect, useState } from "react";
-import { books, clearBooks, loadBooks } from "./utils/catalog";
+import { books, loadBooks } from "./utils/catalog";
 import { BrowserRouter, Routes, Route } from "react-router";
 import Home from "./pages/Home";
 import AddBook from "./pages/AddBook";
