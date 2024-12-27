@@ -1,5 +1,3 @@
-import { books_v1 } from "googleapis";
-
 export type Rack =
   | "A1"
   | "A2"
@@ -64,7 +62,16 @@ export const racks: Rack[] = [
 export interface BookInfo {
   id: string;
   title: string;
-  info: books_v1.Schema$Volume["volumeInfo"];
+  authors: string[];
+  coverImage?: string;
+  subtitle?: string;
+  description?: string;
+  publisher?: string;
+  publicationDate?: string;
+  category?: string;
+  isbn?: string;
+  pages?: number;
+  googleBooksId?: string;
+  googleBooksCategories?: string[];
   rack: Rack;
-  custom: boolean;
 }

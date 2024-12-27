@@ -2,47 +2,59 @@ import { get, ref, set, update } from "@firebase/database";
 import { getBook } from "./books";
 import { getFirebaseDB } from "./database";
 import { BookInfo, Rack } from "./types";
+import { nanoid } from "nanoid";
 
 export const books: BookInfo[] = [];
 
 const useFirebase = import.meta.env.VITE_DATABASE_TYPE === "firebase";
 
-export async function addBook(id: string, rack: Rack) {
-  const book = await getBook(id);
-  const bookInfo = {
-    id: book.id!,
-    title: book.volumeInfo!.title!,
-    info: book.volumeInfo!,
+export async function addGoogleBook(gbId: string, rack: Rack) {
+  const bookData = await getBook(gbId);
+  const id = nanoid(12);
+  const bookInfo: BookInfo = {
+    id: id,
+    title: bookData.volumeInfo?.title || "Untitled",
+    subtitle: bookData.volumeInfo?.subtitle,
+    authors: bookData.volumeInfo?.authors || [],
     rack,
-    custom: false,
+    coverImage: bookData.volumeInfo?.imageLinks?.thumbnail,
+    description: bookData.volumeInfo?.description,
+    googleBooksCategories: bookData.volumeInfo?.categories || [],
+    googleBooksId: gbId,
+    isbn:
+      bookData.volumeInfo?.industryIdentifiers?.find(
+        (id) => id.type === "ISBN_13"
+      )?.identifier ||
+      bookData.volumeInfo?.industryIdentifiers?.[0]?.identifier,
+    pages: bookData.volumeInfo?.pageCount,
+    publicationDate: bookData.volumeInfo?.publishedDate,
+    publisher: bookData.volumeInfo?.publisher,
   };
   if (!useFirebase) {
     books.push(bookInfo);
     return;
   }
   const db = getFirebaseDB();
-  const docRef = ref(db, `books/${book.id}`);
+  const docRef = ref(db, `books/${bookInfo.id}`);
   await set(docRef, bookInfo);
   books.push(bookInfo);
 }
 
 export async function addCustomBook(isbn: string, title: string, rack: Rack) {
-  const bookInfo = {
-    id: isbn,
+  const id = nanoid(12);
+  const bookInfo: BookInfo = {
+    id,
     title,
-    info: {
-      title,
-      authors: ["Unknown Author"],
-    },
+    authors: [],
     rack,
-    custom: true,
+    isbn,
   };
   if (!useFirebase) {
     books.push(bookInfo);
     return;
   }
   const db = getFirebaseDB();
-  const docRef = ref(db, `books/${isbn}`);
+  const docRef = ref(db, `books/${bookInfo.id}`);
   await set(docRef, bookInfo);
   books.push(bookInfo);
 }

@@ -4,7 +4,7 @@ import { Rack, racks } from "../utils/types";
 import BookInfo from "../components/BookInfo";
 import { searchBooks } from "../utils/books";
 import { books_v1 } from "googleapis";
-import { addBook, addCustomBook } from "../utils/catalog";
+import { addGoogleBook, addCustomBook } from "../utils/catalog";
 import Header from "../components/Header";
 import BarcodeScanner from "../components/BarcodeScanner";
 import { Result } from "@zxing/library";
@@ -180,7 +180,7 @@ export default function AddBook() {
               {rack && (
                 <button
                   onClick={() => {
-                    addBook(book.id!, rack).then(() => {
+                    addGoogleBook(book.id!, rack).then(() => {
                       clearSearch();
                     });
                   }}

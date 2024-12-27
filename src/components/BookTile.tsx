@@ -19,13 +19,14 @@ export default function BookTile({
   return (
     <div className="book-tile" key={book.id}>
       <img
-        src={cleanURL(book.info?.imageLinks?.thumbnail)}
+        src={cleanURL(book.coverImage)}
         className="book-cover"
-        alt={book.info?.title}
+        alt={book.title}
       />
       <div className="book-details">
-        <div className="book-title">{book.info?.title}</div>
-        <div className="book-authors">{book.info?.authors?.join(", ")}</div>
+        <div className="book-title">{book.title}</div>
+        <div className="book-authors">{book.authors?.join(", ")}</div>
+        <div className="book-category">{book.category}</div>
         {showRack && <div className="book-rack">Rack {book.rack}</div>}
       </div>
     </div>

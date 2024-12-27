@@ -16,6 +16,7 @@
     "@googleapis/books": "^4.0.0",
     "firebase": "^11.1.0",
     "googleapis": "^144.0.0",
+    "nanoid": "^5.0.9",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-qr-barcode-scanner": "^2.0.0",
