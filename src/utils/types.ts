@@ -68,7 +68,7 @@ export interface BookInfo {
   description?: string;
   publisher?: string;
   publicationDate?: string;
-  category?: string;
+  category?: Category;
   isbn?: string;
   pages?: number;
   googleBooksId?: string;
@@ -83,4 +83,6 @@ export const categories = [
   "Biography/Autobiography",
   "Spirituality/Philosophy/Religion",
   "Others",
-];
+] as const;
+
+export type Category = (typeof categories)[number];

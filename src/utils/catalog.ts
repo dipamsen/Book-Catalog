@@ -1,14 +1,18 @@
 import { get, ref, set, update } from "@firebase/database";
 import { getBook } from "./books";
 import { getFirebaseDB } from "./database";
-import { BookInfo, Rack } from "./types";
+import { BookInfo, Category, Rack } from "./types";
 import { nanoid } from "nanoid";
 
 export const books: BookInfo[] = [];
 
 const useFirebase = import.meta.env.VITE_DATABASE_TYPE === "firebase";
 
-export async function addGoogleBook(gbId: string, rack: Rack) {
+export async function addGoogleBook(
+  gbId: string,
+  rack: Rack,
+  category: Category
+) {
   const bookData = await getBook(gbId);
   const id = nanoid(12);
   const bookInfo: BookInfo = {
@@ -17,6 +21,7 @@ export async function addGoogleBook(gbId: string, rack: Rack) {
     subtitle: bookData.volumeInfo?.subtitle,
     authors: bookData.volumeInfo?.authors || [],
     rack,
+    category,
     coverImage: bookData.volumeInfo?.imageLinks?.thumbnail,
     description: bookData.volumeInfo?.description,
     googleBooksCategories: bookData.volumeInfo?.categories || [],
@@ -40,12 +45,18 @@ export async function addGoogleBook(gbId: string, rack: Rack) {
   books.push(bookInfo);
 }
 
-export async function addCustomBook(isbn: string, title: string, rack: Rack) {
+export async function addCustomBook(
+  title: string,
+  rack: Rack,
+  category: Category,
+  isbn?: string
+) {
   const id = nanoid(12);
   const bookInfo: BookInfo = {
     id,
     title,
     authors: [],
+    category,
     rack,
     isbn,
   };

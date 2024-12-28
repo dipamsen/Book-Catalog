@@ -8,9 +8,13 @@ import { addGoogleBook, addCustomBook } from "../utils/catalog";
 import Header from "../components/Header";
 import BarcodeScanner from "../components/BarcodeScanner";
 import { Result } from "@zxing/library";
+import { categories } from "../utils/types";
 
 export default function AddBook() {
   const [rack, setRack] = useState<Rack | "">("");
+  const [category, setCategory] = useState<(typeof categories)[number] | "">(
+    ""
+  );
   const [search, setSearch] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [results, setResults] = useState<books_v1.Schema$Volume[]>([]);
@@ -94,6 +98,20 @@ export default function AddBook() {
             </option>
           ))}
         </select>
+        <select
+          className="category-select"
+          value={category}
+          onChange={(e) =>
+            setCategory(e.target.value as (typeof categories)[number])
+          }
+        >
+          <option value="">Select a category</option>
+          {categories.map((c) => (
+            <option key={c} value={c}>
+              {c}
+            </option>
+          ))}
+        </select>
         <div className="search-scan">
           <form
             className="search-form"
@@ -140,7 +158,7 @@ export default function AddBook() {
         <div className="no-results">{searching && "Searching..."}</div>
       )}
 
-      {showCustomBookCreation && rack && (
+      {showCustomBookCreation && rack && category && (
         <div className="custom-book-form">
           <h3>Add Custom Book</h3>
           <div className="inputs">
@@ -159,15 +177,18 @@ export default function AddBook() {
           </div>
           <button
             onClick={() => {
-              if (customBookTitle && customBookISBN) {
-                addCustomBook(customBookISBN, customBookTitle, rack).then(
-                  () => {
-                    setCustomBookTitle("");
-                    setCustomBookISBN("");
-                    setShowCustomBookCreation(false);
-                    clearSearch();
-                  }
-                );
+              if (customBookTitle) {
+                addCustomBook(
+                  customBookTitle,
+                  rack,
+                  category,
+                  customBookISBN
+                ).then(() => {
+                  setCustomBookTitle("");
+                  setCustomBookISBN("");
+                  setShowCustomBookCreation(false);
+                  clearSearch();
+                });
               }
             }}
           >
@@ -181,10 +202,10 @@ export default function AddBook() {
           <div className="search-result" key={book.id}>
             <BookInfo book={book} />
             <div className="actions">
-              {rack && (
+              {rack && category && (
                 <button
                   onClick={() => {
-                    addGoogleBook(book.id!, rack).then(() => {
+                    addGoogleBook(book.id!, rack, category).then(() => {
                       clearSearch();
                     });
                   }}
