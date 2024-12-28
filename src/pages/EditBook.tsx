@@ -2,7 +2,7 @@ import { useNavigate, useParams } from "react-router";
 import Header from "../components/Header";
 import { books, updateBook } from "../utils/catalog";
 import "./EditBook.css";
-import { categories, Rack, racks } from "../utils/types";
+import { categories, Category, Rack, racks } from "../utils/types";
 import { useState } from "react";
 
 export default function EditBook() {
@@ -58,7 +58,9 @@ export default function EditBook() {
         <select
           id="category"
           value={book.category}
-          onChange={(e) => setBook({ ...book, category: e.target.value })}
+          onChange={(e) =>
+            setBook({ ...book, category: e.target.value as Category })
+          }
         >
           {categories.map((category) => (
             <option key={category} value={category}>

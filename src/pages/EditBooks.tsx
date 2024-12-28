@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Header from "../components/Header";
 import { books, bulkUpdate } from "../utils/catalog";
-import { BookInfo, categories, Rack, racks } from "../utils/types";
+import { BookInfo, categories, Category, Rack, racks } from "../utils/types";
 import "./EditBooks.css";
 
 export default function EditBooks() {
@@ -76,7 +76,7 @@ export default function EditBooks() {
                         if (b.id === book.id) {
                           return {
                             ...b,
-                            category: e.target.value,
+                            category: e.target.value as Category,
                           };
                         }
                         return b;
