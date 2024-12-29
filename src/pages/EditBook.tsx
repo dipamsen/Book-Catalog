@@ -1,17 +1,35 @@
 import { useNavigate, useParams } from "react-router";
 import Header from "../components/Header";
-import { books, updateBook } from "../utils/catalog";
 import "./EditBook.css";
-import { categories, Category, Rack, racks } from "../utils/types";
 import { useState } from "react";
+import {
+  BooksActionTypes,
+  useBooksState,
+  useBooksStateDispatch,
+} from "../utils/BooksContext";
+import { BookInfo } from "../utils/types";
+import * as database from "../utils/catalog";
 
 export default function EditBook() {
   const { id } = useParams<{ id: string }>();
+  const { books, racks, categories } = useBooksState();
+  const dispatch = useBooksStateDispatch();
   const [book, setBook] = useState(books.find((book) => book.id === id));
   const navigate = useNavigate();
 
   if (!id || !book) {
     return null;
+  }
+
+  async function updateBook(book: BookInfo) {
+    dispatch({
+      type: BooksActionTypes.UpdateBook,
+      book,
+    });
+
+    await database.editBook(book);
+
+    navigate(`/book/${id}`);
   }
 
   return (
@@ -23,9 +41,7 @@ export default function EditBook() {
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          updateBook(book).then(() => {
-            navigate(`/book/${id}`);
-          });
+          updateBook(book);
         }}
       >
         <label htmlFor="title">Title *</label>
@@ -58,9 +74,7 @@ export default function EditBook() {
         <select
           id="category"
           value={book.category}
-          onChange={(e) =>
-            setBook({ ...book, category: e.target.value as Category })
-          }
+          onChange={(e) => setBook({ ...book, category: e.target.value })}
         >
           {categories.map((category) => (
             <option key={category} value={category}>
@@ -73,7 +87,7 @@ export default function EditBook() {
         <select
           id="rack"
           value={book.rack}
-          onChange={(e) => setBook({ ...book, rack: e.target.value as Rack })}
+          onChange={(e) => setBook({ ...book, rack: e.target.value })}
         >
           {racks.map((rack) => (
             <option key={rack} value={rack}>

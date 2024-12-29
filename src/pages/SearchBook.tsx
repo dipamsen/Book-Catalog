@@ -1,26 +1,24 @@
 import { useState } from "react";
 import Header from "../components/Header";
 import { BookInfo } from "../utils/types";
-import { books } from "../utils/catalog";
 import "./SearchBook.css";
 import BarcodeScanner from "../components/BarcodeScanner";
 import { Result } from "@zxing/library";
 import BookTile from "../components/BookTile";
+import { useBooksState } from "../utils/BooksContext";
+import { searchFilter } from "../utils/search";
 
 export default function SearchBook() {
   const [search, setSearch] = useState("");
   const [results, setResults] = useState<BookInfo[]>([]);
   const [showScanner, setShowScanner] = useState(false);
 
+  const { books } = useBooksState();
+
   function handleSearch(search: string) {
     if (!search) return;
 
-    setResults(
-      books.filter((book) => {
-        const cloud = JSON.stringify(book).toLowerCase();
-        return cloud.includes(search.toLowerCase());
-      })
-    );
+    setResults(searchFilter(books, search));
   }
 
   function clearSearch() {

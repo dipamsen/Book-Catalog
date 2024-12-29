@@ -1,26 +1,28 @@
 import BookTile from "../components/BookTile";
 import "./Home.css";
-import { books } from "../utils/catalog";
-import { BookInfo } from "../utils/types";
 import { fetchQuote, Quote } from "../utils/quotes";
 import { useEffect, useState } from "react";
 import Header from "../components/Header";
 import { Link } from "react-router";
+import { useBooksState } from "../utils/BooksContext";
 
 export default function Home() {
   const [quote, setQuote] = useState<Quote>();
-  const [recommended, setRecommended] = useState<BookInfo[]>([]);
+  const [recommended, setRecommended] = useState<string[]>([]);
+  const state = useBooksState();
+
+  const books = state.books;
 
   useEffect(() => {
-    const recommended: BookInfo[] = [];
-    if (books.length < 3) return setRecommended(books);
+    const recommended: string[] = [];
+    if (books.length < 3) return setRecommended(books.map((b) => b.id));
     for (let i = 0; i < 3; i++) {
       const book = books[Math.floor(Math.random() * books.length)];
-      if (!recommended.includes(book)) recommended.push(book);
+      if (!recommended.includes(book.id)) recommended.push(book.id);
       else i--;
     }
     setRecommended(recommended);
-  }, []);
+  }, [books]);
 
   useEffect(() => {
     async function get() {
@@ -56,8 +58,12 @@ export default function Home() {
         <div className="recommended">
           <h2>Recommended Books</h2>
           <div className="books">
-            {recommended.map((book) => (
-              <BookTile key={book.id} book={book} showRack />
+            {recommended.map((id) => (
+              <BookTile
+                key={id}
+                book={books.find((b) => b.id == id)!}
+                showRack
+              />
             ))}
           </div>
         </div>

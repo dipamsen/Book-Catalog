@@ -15,6 +15,7 @@
     "@firebase/database": "^1.0.10",
     "@googleapis/books": "^4.0.0",
     "firebase": "^11.1.0",
+    "fuse.js": "^7.0.0",
     "googleapis": "^144.0.0",
     "nanoid": "^5.0.9",
     "react": "^18.3.1",

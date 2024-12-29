@@ -1,12 +1,17 @@
-import { Rack, racks } from "../utils/types";
 import "./ViewBooks.css";
-import { books } from "../utils/catalog";
+
 import BookTile from "../components/BookTile";
 import { useState } from "react";
 import Header from "../components/Header";
+import { useBooksState } from "../utils/BooksContext";
 
 export default function AddBook() {
-  const [activeRack, setActiveRack] = useState<Rack | null>(null);
+  const [activeRack, setActiveRack] = useState<string | null>(null);
+
+  const state = useBooksState();
+
+  const books = state.books;
+  const racks = state.racks;
 
   return (
     <div className="view-books">

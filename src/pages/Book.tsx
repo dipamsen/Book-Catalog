@@ -1,10 +1,12 @@
 import { Link, useParams } from "react-router";
-import { books } from "../utils/catalog";
 import Header from "../components/Header";
 import "./Book.css";
+import { useBooksState } from "../utils/BooksContext";
 
 export default function Book() {
   const { id } = useParams<{ id: string }>();
+
+  const { books } = useBooksState();
 
   const datefmt = new Intl.DateTimeFormat("en-IN", {
     year: "numeric",
