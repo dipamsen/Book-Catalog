@@ -13,4 +13,5 @@ export interface BookInfo {
   googleBooksId?: string;
   googleBooksCategories?: string[];
   rack: string;
+  copies: number;
 }

@@ -1,12 +1,15 @@
-import { Link, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import Header from "../components/Header";
 import "./Book.css";
 import { useBooksState } from "../utils/BooksContext";
+import { getFirebaseDB } from "../utils/database";
+import { ref, remove } from "@firebase/database";
 
 export default function Book() {
   const { id } = useParams<{ id: string }>();
 
   const { books } = useBooksState();
+  const navigate = useNavigate();
 
   const datefmt = new Intl.DateTimeFormat("en-IN", {
     year: "numeric",
@@ -25,6 +28,13 @@ export default function Book() {
   function cleanURL(link: string | undefined) {
     if (!link) return "https://via.placeholder.com/100x133";
     return link;
+  }
+
+  async function handleDelete(id: string) {
+    const db = getFirebaseDB();
+    const booksRef = ref(db, `books/${id}`);
+    await remove(booksRef);
+    navigate(-1);
   }
 
   if (!books.find((book) => book.id === id)) {
@@ -68,9 +78,19 @@ export default function Book() {
       ></div>
 
       <div className="actions">
-        <Link to={`/edit/${book.id}`} className="edit-btn">
+        <Link to={`/edit/${book.id}`} className="btn">
           Edit
         </Link>
+        <button
+          className="btn"
+          onClick={() => {
+            if (confirm("Are you sure you want to delete this book?")) {
+              handleDelete(book.id);
+            }
+          }}
+        >
+          Delete
+        </button>
       </div>
     </div>
   );

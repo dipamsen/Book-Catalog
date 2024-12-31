@@ -1,0 +1,96 @@
+.edit-books #search-book {
+  width: 100%;
+}
+
+.edit-books .search-results {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.edit-books .searching {
+  margin: 20px 0;
+}
+
+.edit-books .search-result {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  display: flex;
+  cursor: pointer;
+}
+
+.edit-books .search-result .title {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+.edit-books .search-result .cover {
+  width: 100px;
+  height: 100px;
+  margin-right: 10px;
+  object-fit: contain;
+}
+
+.edit-books .book-data {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.edit-books .selected-books .books {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+.edit-books .selected-book {
+  display: flex;
+  margin: 20px 0;
+}
+
+.edit-books .selected-book .cover {
+  width: 60px;
+  height: 60px;
+  margin-right: 10px;
+  object-fit: contain;
+}
+
+.edit-books .actions form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.edit-books .actions form select {
+  width: 100%;
+}
+
+.edit-books .actions form button {
+  margin: 10px 0;
+  width: 100%;
+  max-width: 200px;
+  padding: 10px;
+  font-size: 1.2em;
+  font-weight: bold;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.edit-books .selected-book .remove {
+  color: red;
+  cursor: pointer;
+}
+
+.edit-books .selected-book .det {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+@media (min-width: 768px) {
+  .edit-books .actions form {
+    flex-direction: row;
+  }
+}

@@ -211,6 +211,7 @@ export default function AddBook() {
                   title: customBookTitle,
                   authors: [],
                   category,
+                  copies: 1,
                   rack,
                   isbn: customBookISBN,
                 });
@@ -236,6 +237,7 @@ export default function AddBook() {
                       authors: book.volumeInfo?.authors || [],
                       rack,
                       category,
+                      copies: 1,
                       coverImage:
                         book.volumeInfo?.imageLinks?.thumbnail?.replace(
                           "&edge=curl",

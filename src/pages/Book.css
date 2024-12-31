@@ -36,7 +36,7 @@
   margin-bottom: 1rem;
 }
 
-.book-page .edit-btn {
+.book-page .btn {
   font-size: 1.2rem;
   padding: 0.5rem 1rem;
   background-color: #95dbc6;
@@ -46,7 +46,7 @@
   color: black;
 }
 
-.book-page .edit-btn:hover {
+.book-page .btn:hover {
   background-color: #39a786;
   color: white;
   text-decoration: none;

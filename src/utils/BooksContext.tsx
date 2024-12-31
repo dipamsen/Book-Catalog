@@ -9,21 +9,13 @@ interface BooksState {
 
 export const initialState = {
   books: [],
-  /**
-   * Fiction
-   * Non-Fiction
-   * Science and Technology
-   * History and Politics
-   * Fantasy and Sci-Fi
-   * Mystery and Thriller
-   */
   categories: [
-    "Health",
-    "Personal Development",
-    "Business/Leadership/Management",
-    "Biography/Autobiography",
-    "Spirituality/Philosophy/Religion",
-    "Others",
+    "Fiction",
+    "Non-Fiction",
+    "Science and Technology",
+    "History and Politics",
+    "Fantasy and Sci-Fi",
+    "Mystery and Thriller",
   ],
   racks: [
     "A1",

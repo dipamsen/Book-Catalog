@@ -7,6 +7,7 @@ import ViewBooks from "./pages/ViewBooks";
 import SearchBook from "./pages/SearchBook";
 import Book from "./pages/Book";
 import EditBook from "./pages/EditBook";
+import UpdateBooks from "./pages/Update";
 import {
   BooksActionTypes,
   BooksContext,
@@ -16,7 +17,6 @@ import {
 } from "./utils/BooksContext";
 import { getFirebaseDB } from "./utils/database";
 import { off, onValue, ref } from "@firebase/database";
-import EditBooks from "./pages/EditBooks";
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -32,7 +32,7 @@ function App() {
         type: BooksActionTypes.SetBooks,
         books: Object.values(books),
       });
-      setLoading(false);
+      if (loading) setLoading(false);
     });
 
     const categoriesRef = ref(db, "categories");
@@ -58,7 +58,7 @@ function App() {
       off(categoriesRef, "value", b);
       off(racksRef, "value", c);
     };
-  }, [dispatch]);
+  }, [dispatch, loading]);
 
   return (
     <div className="container">
@@ -76,7 +76,7 @@ function App() {
                 <Route path="books" element={<ViewBooks />} />
                 <Route path="book/:id" element={<Book />} />
                 <Route path="search" element={<SearchBook />} />
-                <Route path="edit" element={<EditBooks />} />
+                <Route path="edit" element={<UpdateBooks />} />
                 <Route path="edit/:id" element={<EditBook />} />
               </Routes>
             </BrowserRouter>

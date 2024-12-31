@@ -96,6 +96,24 @@ export default function EditBook() {
           ))}
         </select>
 
+        <label htmlFor="copies">Copies</label>
+        <input
+          type="number"
+          id="copies"
+          value={book.copies}
+          onChange={(e) =>
+            setBook({ ...book, copies: parseInt(e.target.value) })
+          }
+        />
+
+        <label htmlFor="publisher">Publisher</label>
+        <input
+          type="text"
+          id="publisher"
+          value={book.publisher}
+          onChange={(e) => setBook({ ...book, publisher: e.target.value })}
+        />
+
         <label htmlFor="publicationDate">Publication Date</label>
         <input
           type="date"

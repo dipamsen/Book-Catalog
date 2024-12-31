@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import Header from "../components/Header";
-import { BookInfo } from "../utils/types";
 import "./SearchBook.css";
 import BarcodeScanner from "../components/BarcodeScanner";
 import { Result } from "@zxing/library";
@@ -10,16 +9,18 @@ import { searchFilter } from "../utils/search";
 
 export default function SearchBook() {
   const [search, setSearch] = useState("");
-  const [results, setResults] = useState<BookInfo[]>([]);
+  const [results, setResults] = useState<string[]>([]);
   const [showScanner, setShowScanner] = useState(false);
 
   const { books } = useBooksState();
 
-  function handleSearch(search: string) {
-    if (!search) return;
-
-    setResults(searchFilter(books, search));
-  }
+  const handleSearch = useCallback(
+    (search: string) => {
+      if (!search) setResults([]);
+      else setResults(searchFilter(books, search).map((book) => book.id));
+    },
+    [books]
+  );
 
   function clearSearch() {
     setSearch("");
@@ -44,18 +45,23 @@ export default function SearchBook() {
     }
   }
 
+  useEffect(() => {
+    // debounce search
+
+    const timeout = setTimeout(() => {
+      handleSearch(search);
+    }, 500);
+
+    return () => clearTimeout(timeout);
+  }, [search, handleSearch]);
+
   return (
     <div className="search-book">
       <Header backLink="/" />
 
       <h2>Search Book</h2>
 
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleSearch(search);
-        }}
-      >
+      <div className="form">
         <input
           type="search"
           placeholder="Search for books"
@@ -80,13 +86,18 @@ export default function SearchBook() {
             barcode_scanner
           </span>
         </button>
-      </form>
+      </div>
 
       {showScanner && <BarcodeScanner handleScan={handleScan} />}
 
       <div className="results">
         {results.map((book) => (
-          <BookTile key={book.id} book={book} showRack horizontal />
+          <BookTile
+            key={book}
+            book={books.find((b) => b.id === book)!}
+            showRack
+            horizontal
+          />
         ))}
       </div>
     </div>
